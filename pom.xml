@@ -8,31 +8,41 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
-		<java-version>1.6</java-version>
-		<org.springframework-version>3.2.5.RELEASE</org.springframework-version>
+		<java-version>1.8</java-version>
+		<org.springframework-version>4.2.9.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
-		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<org.slf4j-version>1.7.6</org.slf4j-version>
 	</properties>
+	
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.5.RELEASE</version>
+    </parent>
 	<dependencies>
 	
 	<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
 <dependency>
     <groupId>org.mongodb</groupId>
     <artifactId>mongo-java-driver</artifactId>
-    <version>2.12.1</version>
+    <version>3.4.2</version>
 </dependency>
 	<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons -->
 <dependency>
     <groupId>org.springframework.data</groupId>
     <artifactId>spring-data-commons</artifactId>
-    <version>1.7.2.RELEASE</version>
+    <version>1.12.8.RELEASE</version>
 </dependency>
 	<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb -->
 <dependency>
     <groupId>org.springframework.data</groupId>
     <artifactId>spring-data-mongodb</artifactId>
-    <version>1.4.1.RELEASE</version>
+    <version>1.9.8.RELEASE</version>
 </dependency>
+<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -138,6 +148,10 @@
 	</dependencies>
     <build>
         <plugins>
+        <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <version>2.9</version>
