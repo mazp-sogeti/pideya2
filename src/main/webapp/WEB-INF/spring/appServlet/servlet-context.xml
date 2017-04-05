@@ -35,6 +35,8 @@
     <beans:property name="host" value="localhost" />
 </beans:bean>
 
+
+
 <!-- MongoTemplate for connecting and quering the documents in the database -->
 <beans:bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
      <beans:constructor-arg name="mongo" ref="mongo" />

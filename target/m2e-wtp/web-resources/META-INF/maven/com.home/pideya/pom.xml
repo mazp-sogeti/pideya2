@@ -15,7 +15,15 @@
 	</properties>
 	<dependencies>
 
-			<!--Basic MVC project using Spring Security -->
+
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-mongodb</artifactId>
+			<version>3.6.6</version>
+		</dependency>
+		
+		
+		<!--Basic MVC project using Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
