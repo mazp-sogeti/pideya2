@@ -10,7 +10,9 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context.xsd
 		 http://www.springframework.org/schema/data/mongo
-		 http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+		 http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+		 http://www.springframework.org/schema/security
+         http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -26,6 +28,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+
+	
 	<!-- Factory bean that creates the Mongo instance -->
 <beans:bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
     <beans:property name="host" value="localhost" />
@@ -34,10 +38,12 @@
 <!-- MongoTemplate for connecting and quering the documents in the database -->
 <beans:bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
      <beans:constructor-arg name="mongo" ref="mongo" />
-     <beans:constructor-arg name="databaseName" value="testdb" />
+     <beans:constructor-arg name="databaseName" value="testdb2" />
 </beans:bean>
 
-	
+
+<beans:bean id="customUserDetailsService" class="com.home.detailsService.CustomUserDetailsService"/>
+
 	<context:component-scan base-package="com.home.pideya" />
 	<context:component-scan base-package="com.home.models" />
 	<context:component-scan base-package="com.homex.mongo.repositories" />
