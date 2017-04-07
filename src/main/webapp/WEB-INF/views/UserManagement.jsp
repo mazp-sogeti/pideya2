@@ -33,19 +33,18 @@
 
 
 
-    <!-- Bootstrap     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>	<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">  <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"> -->
+<!-- Bootstrap     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>	<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">  <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"> -->
 
- 
-       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
-
-
 <body ng-app="myApp" class="ng-cloak">
 	<div class="generic-container" ng-controller="UserController as ctrl">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<span class="lead">User Registration Form </span>
 			</div>
+			
 			<div class="formcontainer">
 				<form ng-submit="ctrl.submit()" name="myForm"
 					class="form-horizontal">
@@ -107,6 +106,8 @@
 				</form>
 			</div>
 		</div>
+		
+		
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">
@@ -140,6 +141,8 @@
 				</table>
 			</div>
 		</div>
+		
+		
 	</div>
 
 	<script

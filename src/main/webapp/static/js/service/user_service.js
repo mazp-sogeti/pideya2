@@ -2,7 +2,8 @@
  
 angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $q){
  
-    var REST_SERVICE_URI = 'http://localhost:8080/pideya/ShowFormAnfular/user/';
+    var REST_SERVICE_URI = 'http://localhost:8080/pideya/user/';
+    var REST_SERVICE_URI2 = 'http://localhost:8080/pideya/user/';
  
     var factory = {
         fetchAllUsers: fetchAllUsers,
@@ -15,7 +16,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $
  
     function fetchAllUsers() {
         var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI)
+        $http.get(REST_SERVICE_URI2)
             .then(
             function (response) {
                 deferred.resolve(response.data);
