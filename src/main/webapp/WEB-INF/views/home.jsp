@@ -5,11 +5,12 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
 
-<P>  The time on the server is ${serverTime}. </P>
-<P> Getting user from MongoDB: ${user} </P>
+<P> ${user} </P>
+
+   <ul class="nav nav-pills">
+  <li role="presentation"><a href="user">Show Form</a></li>
+
+</ul>
 </body>
 </html>

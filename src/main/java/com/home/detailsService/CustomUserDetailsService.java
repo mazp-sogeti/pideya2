@@ -47,7 +47,7 @@ private MongoTemplate mongoTemplate;
  public Users getUserDetail(String username){
  MongoOperations mongoOperation = (MongoOperations)mongoTemplate;
  Users user = mongoOperation.findOne(new Query(Criteria.where("username").is(username)), Users.class);
- System.out.println(user.toString());
+ System.out.println("userrrrrrrr--------------"+user.toString());
  return user;
  }
  

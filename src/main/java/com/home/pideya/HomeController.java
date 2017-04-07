@@ -31,56 +31,54 @@ import com.home.mongo.repositories.UsersRepository;
  * Handles requests for the application home page.
  */
 
-// @Controller
-// public class HomeController {
-//
-// @Autowired
-// private UsersRepository repository;
-//
-// @RequestMapping(value = "/", method = RequestMethod.GET)
-// public ModelAndView helloWorld( ModelMap model ) {
-// List users = repository.findAll();
-//
-// ModelAndView modelAndView = new ModelAndView("index");
-// modelAndView.addObject("users", users );
-// return modelAndView;
-// }
-// }
+//	 @Controller
+//	 public class HomeController2 {
+//	
+//		 @Autowired
+//		 private UsersRepository repository;
+//		
+//		// @RequestMapping(value = "/", method = RequestMethod.GET)
+//		 @RequestMapping(value = "/kfkfkfkfkfk")
+//		 //public ModelAndView helloWorld( ModelMap model ) {
+//		 public String helloWorld(  ) {
+//		 //List users = repository.findAll();
+//		
+//		 //ModelAndView modelAndView = new ModelAndView("index");
+//		 //modelAndView.addObject("users", users );
+//		 return "login";
+//		 }
+	 
 
 @Controller
 public class HomeController {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	 @Autowired
-	 private UsersRepository repository;
-	 
-	 @Autowired
-	 private MongoOperations mongoOperations;
-	 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	
+//	 @Autowired
+//	 private UsersRepository repository;
+//	 
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 
-		logger.info("Welcome home! the client locale is " + locale.toString());
-		
-
+		MongoOperations mongoOperation = (MongoOperations)mongoTemplate;
+		 Users user = mongoOperation.findOne(new Query(Criteria.where("username").is("codesilo")), Users.class);
 		Query searchUserQuery = new Query(Criteria.where("username").is("codesilo"));
-	
-		
-			
-		Users user = repository.findUsersByName("codesilo");
+		// Users user = new Users("codesilo", "Password", "Code", "Silo");
+		/// user= repository.save(user);	
+	//	Users user2 = repository.findUsersByName("codesilo");
 		//List<Users> users = repository.findAll();
-				
-
 		System.out.println("retrieve user with Query--------"+ user);
 		model.addAttribute("user", user.toString());
 
 		return "home";
 	}
+	
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public String getUser(Locale locale, Model model) {
+		return "UserManagement";
+	}
+ 	}
 
-}
