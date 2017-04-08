@@ -3,8 +3,11 @@ package com.home.pideya;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoActionOperation;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,22 +22,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.home.models.Users;
+import com.home.mongo.repositories.UsersRepository;
 
 
 @Controller
 public class HelloWorldRestController {
-	
 	  
 	@Autowired
 	 private MongoTemplate mongoTemplate;
 	 
+	 @Autowired
+	 private UsersRepository repository;
+	 
 	    //-------------------Retrieve All Users--------------------------------------------------------
 	      
-	 @ResponseBody
+		@ResponseBody
 	    @ResponseStatus(HttpStatus.OK)
 	    @RequestMapping(value = "/user/", method = RequestMethod.GET)
+	 
 	    public ResponseEntity <List<Users>> listAllUsers() {
-		// List<User> users = userService.findAllUsers();
 		 MongoOperations mongoOperation = (MongoOperations)mongoTemplate;
 		 List<Users> listUser = mongoOperation.findAll(Users.class);
 		 
@@ -45,81 +51,89 @@ public class HelloWorldRestController {
 	        }
 	        return new ResponseEntity<List<Users>>(listUser, HttpStatus.OK);
 	    }
-	    //-------------------Retrieve Single User--------------------------------------------------------
-//	      
-//	    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//	    public ResponseEntity<User> getUser(@PathVariable("id") long id) {
-//	        System.out.println("Fetching User with id " + id);
-//	        User user = userService.findById(id);
-//	        if (user == null) {
-//	            System.out.println("User with id " + id + " not found");
-//	            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//	        }
-//	        return new ResponseEntity<User>(user, HttpStatus.OK);
-//	    }
-//	  
-//	      
-//	      
+		
+		
+	      
+	    //------------------- Update a User --------------------------------------------------------
+	      
+	    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+	    public ResponseEntity<Users> updateUser(@PathVariable("id") String id, @RequestBody Users user) {
+	        System.out.println("Updating User-------- restController " + id);
+	          
+		   	 MongoOperations mongoOperation = (MongoOperations)mongoTemplate;
+	        Users currentUser = mongoOperation.findById(id, Users.class);
+	        if (currentUser==null) {
+	            System.out.println("User with id " + id + " not found");
+	            return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
+	        }
+	  
+	        currentUser.setUsername(user.getUsername());
+	        currentUser.setAddress(user.getAddress());
+	        currentUser.setEmail(user.getEmail());
+	        mongoOperation.save(currentUser);
+	       //mongoOperation.findAndModify(new Query(Criteria.where("").is("codesilo")), currentUser, Users.class);
+	        return new ResponseEntity<Users>(currentUser, HttpStatus.OK);
+	    }
+	  
+	     
+	//    -------------------Retrieve Single User--------------------------------------------------------
+	      
+	    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	    public ResponseEntity<Users> getUser(@PathVariable("id") String id) {
+	        System.out.println("Fetching User with id------RestController " + id);
+	   	 MongoOperations mongoOperation = (MongoOperations)mongoTemplate;
+	        Users user = mongoOperation.findById(id, Users.class);
+	        if (user == null) {
+	            System.out.println("User with id " + id + " not found");
+	            return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
+	        }
+	        return new ResponseEntity<Users>(user, HttpStatus.OK);
+	    }
+	  
+	      
+	      
 //	    //-------------------Create a User--------------------------------------------------------
-//	      
-//	    @RequestMapping(value = "/user/", method = RequestMethod.POST)
-//	    public ResponseEntity<Void> createUser(@RequestBody User user,    UriComponentsBuilder ucBuilder) {
-//	        System.out.println("Creating User " + user.getUsername());
-//	  
-//	        if (userService.isUserExist(user)) {
-//	            System.out.println("A User with name " + user.getUsername() + " already exist");
-//	            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//	        }
-//	  
-//	        userService.saveUser(user);
-//	  
-//	        HttpHeaders headers = new HttpHeaders();
-//	        headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
-//	        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-//	    }
-//	  
-//	     
-//	      
-//	    //------------------- Update a User --------------------------------------------------------
-//	      
-//	    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-//	    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
-//	        System.out.println("Updating User " + id);
-//	          
-//	        User currentUser = userService.findById(id);
-//	          
-//	        if (currentUser==null) {
-//	            System.out.println("User with id " + id + " not found");
-//	            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//	        }
-//	  
-//	        currentUser.setUsername(user.getUsername());
-//	        currentUser.setAddress(user.getAddress());
-//	        currentUser.setEmail(user.getEmail());
-//	          
-//	        userService.updateUser(currentUser);
-//	        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
-//	    }
-//	  
-//	     
-//	     
+	      
+	    @RequestMapping(value = "/user/", method = RequestMethod.POST)
+	    public ResponseEntity<Void> createUser(@RequestBody Users user,    UriComponentsBuilder ucBuilder) {
+	        System.out.println("Creating User " + user.getUsername());
+	        MongoOperations mongoOperation = (MongoOperations)mongoTemplate;
+	        
+	        boolean u= repository.exists(user.username);
+	        
+	        System.out.println("result of username name exist"+u);
+	        
+	        if(repository.exists(user.username)!=true){
+	            System.out.println("A User with name " + user.getUsername() + " already exist");
+	            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+	        }
+	  
+	       repository.save(user);
+	  
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
+	        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	    }
+	  
+	     
+	     
 //	    //------------------- Delete a User --------------------------------------------------------
-//	      
-//	    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-//	    public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
-//	        System.out.println("Fetching & Deleting User with id " + id);
-//	  
-//	        User user = userService.findById(id);
-//	        if (user == null) {
-//	            System.out.println("Unable to delete. User with id " + id + " not found");
-//	            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//	        }
-//	  
-//	        userService.deleteUserById(id);
-//	        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-//	    }
-//	  
-//	      
+	      
+	    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+	    public ResponseEntity<Users> deleteUser(@PathVariable("id") String id) {
+	        System.out.println("Fetching & Deleting User with id " + id);
+	  
+	        Users user = repository.findOne(id);
+	        if (user == null) {
+	            System.out.println("Unable to delete. User with id " + id + " not found");
+	            return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);
+	        }
+	  
+	        repository.delete(id);
+	        return new ResponseEntity<Users>(HttpStatus.NO_CONTENT);
+	    }
+	  
+	      
 //	     
 //	    //------------------- Delete All Users --------------------------------------------------------
 //	      

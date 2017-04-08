@@ -64,14 +64,23 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 
 		MongoOperations mongoOperation = (MongoOperations)mongoTemplate;
-		 Users user = mongoOperation.findOne(new Query(Criteria.where("username").is("codesilo")), Users.class);
+		 //Users user = mongoOperation.findOne(new Query(Criteria.where("username").is("codesilo")), Users.class);
 		Query searchUserQuery = new Query(Criteria.where("username").is("codesilo"));
-		// Users user = new Users("codesilo", "Password", "Code", "Silo");
+		
+//		for(int i=0;i<4;i++){
+//			Users user = new Users("mazp"+i, "Password", "marcelus", "zeron","marcelusz@hotmial.com ","ps donde tu quieras # 1",1);
+//			mongoOperation.save(user);
+//			
+//		}
+		//Users user = new Users("mazp", "Password", "marcelus", "zeron","marcelusz@hotmial.com ","ps donde tu quieras # 1",1);
+		//mongoOperation.save(user);
 		/// user= repository.save(user);	
-	//	Users user2 = repository.findUsersByName("codesilo");
+		//Users user2 = repository.findUsersByName("codesilo");
 		//List<Users> users = repository.findAll();
-		System.out.println("retrieve user with Query--------"+ user);
-		model.addAttribute("user", user.toString());
+		 Users user = mongoOperation.findOne(new Query(Criteria.where("username").is("codesilo")), Users.class);
+		// mongoOperation.remove(new Query(Criteria.where("lastName").is("zeron")), Users.class);
+//		System.out.println("retrieve user with Query--------"+ user);
+//		model.addAttribute("user", user.toString());
 
 		return "home";
 	}

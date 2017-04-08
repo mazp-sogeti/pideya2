@@ -18,7 +18,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $
         var deferred = $q.defer();
         $http.get(REST_SERVICE_URI2)
             .then(
-            function (response) {
+            		function (response) {
                 deferred.resolve(response.data);
             },
             function(errResponse){
@@ -62,6 +62,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $
  
     function deleteUser(id) {
         var deferred = $q.defer();
+        console.log("url-------"+REST_SERVICE_URI+id);
         $http.delete(REST_SERVICE_URI+id)
             .then(
             function (response) {

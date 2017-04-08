@@ -16,4 +16,7 @@ public interface UsersRepository extends MongoRepository<Users, String>{
 	@Query("{ 'username' : ?0 }")
 	Users findUsersByName(String name);
 	
+	@Query("update users u set u.username = ?1 and u.address = ?2 and u.email = ?3 where u._id = ?4")
+	int setFixedFirstnameFor(String username, String address, String email, String id );
+	
 }

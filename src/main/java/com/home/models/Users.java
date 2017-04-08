@@ -10,12 +10,29 @@ public class Users {
     private String id;
     
     
-    public String username;
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String username;
     public String password;
-    public String firstName;
+    public String firstName;    
     public String lastName;
     public String email;
-    public int role;
+    public String address;
+    public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String adreess) {
+		this.address = adreess;
+	}
+
+	public int role;
     
    public Users() {
     }
@@ -27,16 +44,20 @@ public class Users {
    public void setRole(int role) {
     this.role = role;
     }
-    
-   public Users(String username, String password, String firstName,
-    String lastName) {
-    this.username = username;
-    this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    }
-    
-   public String getUsername() {
+
+   public Users(String username, String password, String firstName, String lastName, String email, String adreess,
+		int role) {
+	super();
+	this.username = username;
+	this.password = password;
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.email = email;
+	this.address = adreess;
+	this.role = role;
+}
+
+public String getUsername() {
     return username;
     }
     
@@ -75,10 +96,12 @@ public class Users {
    public void setEmail(String email) {
     this.email = email;
     }
+
+@Override
+public String toString() {
+	return "Users [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+			+ ", lastName=" + lastName + ", email=" + email + ", address=" + address + ", role=" + role + "]";
+}
     
-   @Override
-    public String toString(){
-    return "First Name:" + this.firstName + " Last Name:" + this.lastName + " Username:" + this.username ;
-    }
-    
+
    }

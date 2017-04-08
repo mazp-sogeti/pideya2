@@ -39,19 +39,35 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body ng-app="myApp" class="ng-cloak">
+
+
+
 	<div class="generic-container" ng-controller="UserController as ctrl">
+	
+	
+	
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<span class="lead">User Registration Form </span>
 			</div>
 			
+			
+			
 			<div class="formcontainer">
+			
+			
 				<form ng-submit="ctrl.submit()" name="myForm"
 					class="form-horizontal">
 					<input type="hidden" ng-model="ctrl.user.id" />
+					
+					
 					<div class="row">
+					
+					
 						<div class="form-group col-md-12">
+						
 							<label class="col-md-2 control-lable" for="uname">Name</label>
+							
 							<div class="col-md-7">
 								<input type="text" ng-model="ctrl.user.username" id="uname"
 									class="username form-control input-sm"
@@ -63,7 +79,10 @@
 										field is invalid </span>
 								</div>
 							</div>
+							
 						</div>
+						
+						
 					</div>
 
 
@@ -104,6 +123,9 @@
 						</div>
 					</div>
 				</form>
+				
+				
+				
 			</div>
 		</div>
 		
