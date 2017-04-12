@@ -48,9 +48,7 @@ public class HomeController {
 				users2.add(dd);
  
 		}
-		
-		
-		ModelAndView modelAndView = new ModelAndView("home");
+		ModelAndView modelAndView = new ModelAndView("index");
 		modelAndView.addObject("users", users2);
 		return modelAndView;
 	}
