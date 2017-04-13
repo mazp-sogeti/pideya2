@@ -56,10 +56,11 @@ public class TestController {
     @CrossOrigin(origins = "http://localhost:9000/pideya")
 	@RequestMapping(value = "/test/{qrCode}", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Pedido> helloWorld2(@PathVariable("qrCode") String qrCode) {
+	public ModelAndView helloWorld2(HttpServletRequest request,@PathVariable("qrCode") String qrCode) {
     	
 		List<Pedido> pList = new ArrayList<Pedido>();
 		Pedido p;
+		
 		// List listAllPedidos = repository.findAll();
 		
 //			p = new Pedido();
@@ -86,17 +87,58 @@ public class TestController {
 //			while(cursor.hasNext()){
 //			    System.out.println(cursor.next());
 //			}
-			
-		ModelAndView modelAndView = new ModelAndView("home");
-		if(ped!=null && ped.size() > 0)
-		modelAndView.addObject("users", ped);
-		return ped;
+		
+		ModelAndView modelAndView = new ModelAndView("index2");
+		String[] parts = qrCode.split("YY");
+		String RESTAURANTE = parts[0]; 
+		String MESA = parts[1];
+		
+		request.setAttribute("res", RESTAURANTE);
+		request.setAttribute("mesa", MESA);
+		
+		//if(ped!=null && ped.size() > 0)
+		//modelAndView.addObject("users", ped);
+		return modelAndView;
 	}
     
-    @GetMapping("/home")
-    public ModelAndView greeting() {
+	@RequestMapping(value = "/test/pedido", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView greeting(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("index2");
-        System.out.println("==== in greeting ====");
+		//request.setAttribute("res", res);
+        System.out.println("==== in pedido ====");
+        
+        try{
+        	Pedido p = new Pedido();
+        	String a = (String)request.getParameter("day");
+        	p.setRestaurante((String)request.getParameter("restaurante"));
+        	p.setMesa((String)request.getParameter("mesas"));
+        	p.setPedido((String)request.getParameter("day"));
+        	mongoOperation.save(p);
+        	request.setAttribute("result", "Pedido enviado");
+        }catch(Exception e){
+            request.setAttribute("result", e.getLocalizedMessage());
+
+        }
         return modelAndView;
     }
+	
+		@RequestMapping(value = "/test/pedidos/{restaurante}", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+		@ResponseBody
+		public ModelAndView verPedidos(HttpServletRequest request,@PathVariable("restaurante") String restaurante) {
+			ModelAndView modelAndView = new ModelAndView("pedidos");
+			
+			Query searchUserQuery = new Query(Criteria.where("restaurante").is(restaurante));
+			
+			List ped = mongoOperation.find(searchUserQuery, Pedido.class);
+		    request.setAttribute("pList", ped);
+	   return modelAndView;
+	   }
+		
+		@RequestMapping(value = "/test/test", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+		@ResponseBody
+		public ModelAndView test(HttpServletRequest request) {
+			ModelAndView modelAndView = new ModelAndView("confPedido");
+			return modelAndView;
+	   }
 }

@@ -11,11 +11,10 @@
 
 
 	<script>
-	
 	$(document).ready(function() {
-		var BASE_URI = "http://84.78.131.211:8080/pideya";
+		var BASE_URI = "http://92.187.253.184:8080/pideya";
 		$.ajax({
-			url : "http://84.78.131.211:8080/pideya/test/masmas",
+			url : "http://92.187.253.184:8080/pideya/test/masmas",
 			type : 'GET',
 			crossDomain : true,
 			contentType : 'application/json',
@@ -29,7 +28,7 @@
 						
 					});
 					
-					alert("te veoooooooo");
+					alert("ok");
 					window.location.href = BASE_URI+"/home";
 				}
 			},
