@@ -17,6 +17,8 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,7 @@ import com.home.mongo.repositories.UsersRepository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.pusher.rest.Pusher;
 
 
 @RestController
@@ -115,6 +118,11 @@ public class TestController {
         	p.setMesa((String)request.getParameter("mesas"));
         	p.setPedido((String)request.getParameter("day"));
         	mongoOperation.save(p);
+        	Pusher pusher = new Pusher("327249", "25a63b5bdeb97ea6104e", "1c9a836061a07adf968b");
+			pusher.setCluster("eu");
+			pusher.setEncrypted(true);
+			
+			pusher.trigger("my-channel", "my-event", Collections.singletonMap("message", p));
         	request.setAttribute("result", "Pedido enviado");
         }catch(Exception e){
             request.setAttribute("result", e.getLocalizedMessage());
@@ -139,6 +147,7 @@ public class TestController {
 		@ResponseBody
 		public ModelAndView test(HttpServletRequest request) {
 			ModelAndView modelAndView = new ModelAndView("confPedido");
+			
 			return modelAndView;
 	   }
 }

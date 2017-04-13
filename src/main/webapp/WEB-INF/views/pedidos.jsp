@@ -22,7 +22,7 @@
         <th>Pedido</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="tabla">
      <%for(Pedido p : (List<Pedido>)request.getAttribute("pList")){ %>
       <tr>
      
@@ -38,6 +38,29 @@
   </table>
   </div>
 </div>
+<head>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('25a63b5bdeb97ea6104e', {
+      cluster: 'eu',
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+    	var a= data.message;
+      alert("Nuevo pedido " + a.mesa);
+      
+		$('#tabla').append("<tr><td>"+a.id+"</td><td>"+a.restaurante+"</td><td>"+a.mesa+"</td><td>"+a.pedido+"</td></tr>");
+
+    });
+  </script>
+</head>
 
 </body>
 </html>
