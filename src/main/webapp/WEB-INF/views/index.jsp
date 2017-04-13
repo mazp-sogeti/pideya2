@@ -1,54 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.List,com.home.models.Users"%>
+	pageEncoding="ISO-8859-1" session="true"%>
+<%@ page import="java.util.List,com.home.models.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
-<body>
+<body  onload="myFunction()">
+	<% Pedido p = new Pedido();
+	p=(Pedido)request.getAttribute("pedidoF"); %>
+<script type="text/javascript">
+
+//Así como en CSS3, tenemos variantes para distintos navegadores. Tan solo obtenemos la función automáticamente
+//cuando el navegador encuentre la que exista en su motor de javascript.
+navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+
+//Ahora preguntamos si realmente existe.
+if (navigator.vibrate) {
+  alert('¡Puedes hacerlo vibrar!');
+  window.navigator.vibrate(1000);
+} else {
+	alert('No puedes hacerlo vibrar :');
+}
+
+function myFunction() {
+	
+	
+	window.location.replace("/pideya/test/pedido");
+}setInterval(myFunction, 2000);
 
 
-	<script>
-	$(document).ready(function() {
-		var BASE_URI = "http://92.187.253.184:8080/pideya";
-		$.ajax({
-			url : "http://92.187.253.184:8080/pideya/test/masmas",
-			type : 'GET',
-			crossDomain : true,
-			contentType : 'application/json',
-			//dataType : 'json',
-			//data : JSON.stringify(fight),
-			success : function(response) {
-				if (parseInt(response.length) == 0) {
-					alert("nada");
-				} else {
-					$.each(response, function(k, v) {
-						
-					});
-					
-					alert("ok");
-					window.location.href = BASE_URI+"/home";
-				}
-			},
-			error : function(response) {
-				alert("Fail cargando la lista de topUsers  " + response);
-			}
-		});
-
-// 		var BASE_URI = "http://localhost:8080/pideya";
-// 		$(document).ready(function() {
-// 			$.ajax({
-// 				url : "http://localhost:8080/pideya/test/masmas"
-// 			}).then(function(data, status, jqxhr) {
-// 				alert(data);
-// 				alert(data.content);
-// 				console.log(jqxhr);
-// 				window.location.href = BASE_URI + "/" + data + "/";
-// 			});
-		});
-	</script>
-
-</body>
+</script>
+<h1>Pedido <%= p !=null ? p.getId() : "nada" %> enviado correctamente </h1>
+</body> 
 </html>
