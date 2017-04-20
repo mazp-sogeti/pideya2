@@ -1,9 +1,11 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" session="true" 
 	pageEncoding="ISO-8859-1" import="com.home.models.*, java.util.List"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <!--  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
+
 <html>
 <head>
 <style>
@@ -22,6 +24,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body onload="myFunction()">
 
@@ -89,7 +92,8 @@
   
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
-    
+
+    var i =0;
     var pusher = new Pusher('25a63b5bdeb97ea6104e', {
       cluster: 'eu',
       encrypted: true
@@ -115,6 +119,14 @@
    src: ["<c:url value="/resources/alert.mp3" />"] //  "http://soundbible.com/mp3/sms-alert-5-daniel_simon.mp3"
 });
     	Howler.mobileAutoEnable = true;
+    	//work on PC only
+//     	var audio = new Audio('<c:url value="/resources/alert.mp3" />');
+//     	audio.play();
+    	
+    	audiojs.events.ready(function() {
+    	    var as = audiojs.createAll();
+    	   // var x = document.getElementById("alertAudio");
+    	  //  x.autoplay = true;
 
 sound.play();
     	
@@ -170,10 +182,38 @@ sound.play();
 	    	function showVideo(e) {
 	    	  vid.play();
 	    	}
-    });
+    	  });
+    	
+//     	var audio = document.getElementById('denied');
+//     	var button = document.getElementById('play-button');
+//     	button.addEventListener('click',function(){
+//     	    audio.play();
+//     	});
+    	
+    	alert("Nuevo pedido de la "+ a.mesa);
+    	
+//     	Push.create("Hello world!", {
+//     	    body: "How's it hangin'?",
+//     	    icon: 'icon.png',
+//     	    timeout: 4000,
+//     	    onClick: function () {
+//     	        window.focus();
+//     	        this.close();
+//     	    }
+//     	});
+    	
+//     	$('#play-button').click(function(){ audio.play(); });
+//     $('#alertAudio').click(function(){ audio.play(); });
  
-    </script>
-</head>
+<!--  <audio id="denied" autobuffer controls autoplay> -->
+<%--     <source src="<c:url value="/resources/alert.mp3" />" /> --%>
+<!-- </audio> -->
+<!-- <a href="#" id="play-button"></a> -->
+ 
+<%-- <audio id="alertAudio" src="<c:url value="/resources/alert.mp3" />" autobuffer controls autoplay /> --%>
+
+<iframe  id="if" hidden width="640" height="360" src="" frameborder="0" allowfullscreen ></iframe>
+
 
 
 <!--  <audio id="denied" autobuffer controls autoplay> -->
