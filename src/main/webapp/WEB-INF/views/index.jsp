@@ -27,9 +27,7 @@ function myFunction() {
 	
 	window.location.replace("/pideya/test/pedido");
 }setInterval(myFunction, 2000);
-
-<body>
-
+</script>
 <h1>Pedido <%= p !=null ? p.getId() : "nada" %> enviado correctamente </h1>
 </body> 
 </html>

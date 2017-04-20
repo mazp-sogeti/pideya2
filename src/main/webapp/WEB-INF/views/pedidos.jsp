@@ -13,6 +13,8 @@
 	display: none;
 }
 </style>
+<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -26,7 +28,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
-<body onload="myFunction()">
+<body>
 
 	<div class="container">
 		<h2>Tabla de pedidos</h2>
@@ -60,9 +62,6 @@
 			</table>
 		</div>
 	</div>
-<head>
-<title>Pusher Test</title>
-<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
 <script>
   var i =1;
   function myFunction() {
@@ -117,7 +116,7 @@
 //     	aud.play();
     	var sound = new Howl({
    src: ["<c:url value="/resources/alert.mp3" />"] //  "http://soundbible.com/mp3/sms-alert-5-daniel_simon.mp3"
-});
+		});
     	Howler.mobileAutoEnable = true;
     	//work on PC only
 //     	var audio = new Audio('<c:url value="/resources/alert.mp3" />');
@@ -127,8 +126,8 @@
     	    var as = audiojs.createAll();
     	   // var x = document.getElementById("alertAudio");
     	  //  x.autoplay = true;
-
-sound.play();
+    	});
+			sound.play();
     	
     	
     	
@@ -182,7 +181,8 @@ sound.play();
 	    	function showVideo(e) {
 	    	  vid.play();
 	    	}
-    	  });
+    	  
+    
     	
 //     	var audio = document.getElementById('denied');
 //     	var button = document.getElementById('play-button');
@@ -191,6 +191,8 @@ sound.play();
 //     	});
     	
     	alert("Nuevo pedido de la "+ a.mesa);
+    	
+    });
     	
 //     	Push.create("Hello world!", {
 //     	    body: "How's it hangin'?",

@@ -163,7 +163,7 @@ public class TestController {
 //					pusher.setCluster("eu");
 //					pusher.setEncrypted(true);
 //					pusher.trigger("my-channel", "my-event", Collections.singletonMap("message", p));
-//		        	//pusher end
+//		        	//pedidospusher end
 					
 					request.setAttribute("result", "Pedido enviado");
 		        	request.setAttribute("pedido", p);
