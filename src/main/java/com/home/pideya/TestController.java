@@ -119,11 +119,7 @@ public class TestController {
 //        	p.setPedido((String)request.getParameter("day"));
         	p = (Pedido)request.getAttribute("pedidoF");
         	//mongoOperation.save(p);
-        	Pusher pusher = new Pusher("327249", "25a63b5bdeb97ea6104e", "1c9a836061a07adf968b");
-			pusher.setCluster("eu");
-			pusher.setEncrypted(true);
-			
-			pusher.trigger("my-channel", "my-event", Collections.singletonMap("message", p));
+        	
         	request.setAttribute("result", "Pedido enviado");
         }catch(Exception e){
             request.setAttribute("result", e.getLocalizedMessage());
@@ -158,6 +154,12 @@ public class TestController {
 		        	p.setPedido(pedido);
 		        	mongoOperation.save(p);
 		        	
+		        	Pusher pusher = new Pusher("327249", "25a63b5bdeb97ea6104e", "1c9a836061a07adf968b");
+					pusher.setCluster("eu");
+					pusher.setEncrypted(true);
+					
+					pusher.trigger("my-channel", "my-event", Collections.singletonMap("message", p));
+		        	
 //		        	//pusher start
 //		        	Pusher pusher = new Pusher("327249", "25a63b5bdeb97ea6104e", "1c9a836061a07adf968b");
 //					pusher.setCluster("eu");
@@ -170,9 +172,7 @@ public class TestController {
 		        	modelAndView.addObject("pedido", p);
 		        }catch(Exception e){
 		            request.setAttribute("result", e.getLocalizedMessage());
-
 		        }
-			
 			return modelAndView;
 	   }
 		

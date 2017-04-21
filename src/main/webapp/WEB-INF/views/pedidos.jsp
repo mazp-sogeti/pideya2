@@ -62,33 +62,45 @@
 			</table>
 		</div>
 	</div>
-<script>
-  var i =1;
-  function myFunction() {
-	    alert("Page is loaded");
-	
-// 	audiojs.events.ready(function() {
-// 	    var as = audiojs.createAll();
-// 	   var x = document.getElementById("alertAudio");
-// 	   x.play();
-// 	  });
-// 		var re = 0;
-// 		if(i > 0) 
-// 			re=1 ;
-// 		else
-// 			re=0;
-<%-- 		 <%String url = "https://www.youtube.com/embed/p_R0vEaw0bE?rel=0&autoplay=";%> <%String url2 = "&output=embed";%> --%>
-<%-- 		  	var URLOK = "<%=url%>"+re+"<%=url2%>"; --%>
-		  	
-// 		  	 $('#if').attr('src',URLOK);
-		  	 
-// 	var vid=document.getElementById('if');
-// 	vid.addEventListener("loadstart", showVideo, false);
-// 	function showVideo(e) {
-// 	  vid.play();
-// 	}
-  }
+
   
+  
+  <head>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script>
+  
+    
+    
+    
+
+//  var i =1;
+//  function myFunction() {
+//	    alert("Page is loaded");
+	
+//// 	audiojs.events.ready(function() {
+//// 	    var as = audiojs.createAll();
+//// 	   var x = document.getElementById("alertAudio");
+//// 	   x.play();
+//// 	  });
+//// 		var re = 0;
+//// 		if(i > 0) 
+//// 			re=1 ;
+//// 		else
+//// 			re=0;
+ <%-- 		 <%String url = "https://www.youtube.com/embed/p_R0vEaw0bE?rel=0&autoplay=";%> <%String url2 = "&output=embed";%> --%>
+ <%-- 		  	var URLOK = "<%=url%>"+re+"<%=url2%>"; --%> 
+		  	
+//// 		  	 $('#if').attr('src',URLOK);
+		  	 
+//// 	var vid=document.getElementById('if');
+//// 	vid.addEventListener("loadstart", showVideo, false);
+//// 	function showVideo(e) {
+//// 	  vid.play();
+//// 	}
+//  }
+    
+    
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
@@ -193,6 +205,7 @@
     	alert("Nuevo pedido de la "+ a.mesa);
     	
     });
+    
     	
 //     	Push.create("Hello world!", {
 //     	    body: "How's it hangin'?",
@@ -206,7 +219,8 @@
     	
 //     	$('#play-button').click(function(){ audio.play(); });
 //     $('#alertAudio').click(function(){ audio.play(); });
- 
+ </script>
+</head>
 <!--  <audio id="denied" autobuffer controls autoplay> -->
 <%--     <source src="<c:url value="/resources/alert.mp3" />" /> --%>
 <!-- </audio> -->

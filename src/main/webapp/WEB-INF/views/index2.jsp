@@ -12,6 +12,32 @@
 <html>
 <head>
 <style type="text/css">
+body {
+	background-color: #666363;
+}
+
+#background {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 50%;
+	background-color: pink;
+	z-index: 1;
+}
+
+article{
+min-height: 13em;
+}
+
+#content {
+	position: relative;
+	z-index: 2;
+	padding: 30px;
+	text-align: center;
+	font-weight: bold;
+	font-family: Arial, sans-serif;
+}
 
 /* The Modal (background) */
 .modal {
@@ -106,7 +132,7 @@
 // 		});
 
 <%-- 		$('#pinga').append("<div class='panel-heading'> Restaurante: <%=request.getAttribute("res")%>  </div>"); --%>
-		$('#pinga').append("</br><div style=' border-radius: 8%;width:90%;background:#575454;' class='jumbotron'> <%=request.getAttribute("res")%>  </div>");
+		$('#pinga').append("</br><div style=' border-radius: 20%;width:70%;background:#575454;' class='jumbotron'><img src='http://cdn.animalgourmet.com/wp-content/uploads/2014/04/animal_gourmet_logo.png'  class='img-responsive'></div>");
 
 });
 					
@@ -117,7 +143,7 @@
 					</script>
 
 
-				<!-- Modal -->
+				<!-- Modal comida -->
 				<div class="modal fade" id="myModal" role="dialog">
 					<div class="modal-dialog">
 
@@ -132,8 +158,8 @@
 								<div data-role="page">
 									<div data-role="main" class="ui-content">
 										<h2>Plato estrella</h2>
-										<p>Nunc blandit nisi ligula magna sodales lectus elementum
-											non. Integer id venenatis velit.</p>
+<!-- 										<p>Nunc blandit nisi ligula magna sodales lectus elementum -->
+<!-- 											non. Integer id venenatis velit.</p> -->
 
 
 										<form method="get" action="test">
@@ -151,15 +177,17 @@
 													<%
 														}
 													%>
-												</select></br> <label for="day"><span> <!-- Steak Filled icon by Icons8 -->
-														<!-- Steak icon by Icons8 --> <img
-														class="icon icons8-Steak"
-														src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAEVUlEQVRoQ+2YjXHUMBCFkwqACjAVABVgKgAqwFRAqACnAqACLhUAFXCpAKgAUwFQAewXLGZ5Xsm/CXMz2RlNzra0em9/pRwfHbgcHzj+o2sC/9uDl+GBm0bquY3HNu71BDv7+9nGexsfbPzYivjWBAD81gHP4Wztw5stiGxJAMt/tcHfKYIXHvaemTI/nLMlgY+2Q70AyTNbs1uw7mLJVgQIiZcC4syeT/owgRjhxfPtACye2C8hsQWBKHTOC96AxCsBSzjdt9HNJbEFAbX+TwNR9ZbP4cEjVKQbbgIea66aQGT9UwMBqTEBLBXLC16g3E6WtR7QcJhifQ9uZw9P3Qt6BP1jsqwlQNms3G6R9Wv7/qC3LAC9sBYdXm7Zw+RGt4YAwCidpc1f20e6chKaF17zsrMH74VZZXUNAd1Y3U/Z/CRgebxjo3PvG/vtc4EceCJzAjV/Xq0h8N3W+67LplSWJK390N7AN6356ECXF0KI9XisKEsJqHVJXj1C5AhElWZv68kTlZ29IKSyspSAxnZUw2vbVXPkm72rAjSQB+yj4BtehUSY2EsJENt4IUku8QCVEhTwlMhSnYc0a/S4AQlCdCBLCEQxWyp9EGXNPgKQ8QZz78o3zbGLz0sINLbOV40v4o2JOIvTIIzVfV4QQhjqH1lCQI/NL0wjObG1QKKz4c9Lg1CdS6A2hZqYWtenEqlsYrp68jvS09p7X4oHR425BDR5555dsCqVhm7siwAJzrNWGjXYuc3h3V+ZQ4C4b8S82pRy1gc0FUjXU36Jdd8AvQ4tGFQw+shsAlhMLyHRucbrruzBh0j6RtKTM4AOa7tTsokHAKFJCgiUK4BSiAAYPZ24iTX0CrxDGHmvtvbsc2DQMMdCCKV66eDYAHjfkJaECGvQT2gl8bohpv/lmFWFpoLXxC6FCBZO1gZgEooBHtq5d3jLH8XDy1LOA2xEufSbRJZnPzzBvKkhkjBCFMAMDUW88s6R4eepjVbeZTuxNqsceNXnn7E0QDREEmgfgn5dZLxcmQ0J1L31vdLwHBKgZ/NUeTREAI6XSgJZcs6vZX62XEchxEb+ihcdlT2Iyh5Sc+J3klKIRCSiase84lElIqAX9dJRoektlgDh6lwu5CyPtYn3OpgwZrwwhH6JolKpPbG5NLixjpoDj9XbIGSYHyatKlJwxLC/iF/GURkMhCjAqwyzQb3PWUAJ4E69YEd32Jy+0vvUcfFaDjgGa2zkKtRAfxQenc3yVzpqNJvSbLRejxEBNJeSVE61uvj1hAzNa9YeEQEsoMeHtBEJinUYaSOOuEi6PQGytkE48ndMWM+e3djE6HsuQXc22ZfSJbrH1gC8tbEfm1j6XqowKCd0/JVuzV6spaNjHEJlkcUVwNhplHCACDGs/+qYSib1BsJvlbXnhFA0l5hmVDbqfgIE078/qCDkBSPlCYBnJeVUq6R5Yx6Yq+/K518TuHKTy4YH74Hfw6z8MdRXrCAAAAAASUVORK5CYII="
-														width="20" height="20">
-												</span>Carne :</label> <select path="day" name="day" id="day">
-													<option value="Pollo">Pollo</option>
-													<option value="Ternera">Ternera</option>
-												</select></br> <label for="day2"> <img class="icon icons8-Meal"><span
+												</select>
+<!-- 												<label for="day"><span> Steak Filled icon by Icons8 -->
+<!-- 														Steak icon by Icons8 <img -->
+<!-- 														class="icon icons8-Steak" -->
+<!-- 														src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAEVUlEQVRoQ+2YjXHUMBCFkwqACjAVABVgKgAqwFRAqACnAqACLhUAFXCpAKgAUwFQAewXLGZ5Xsm/CXMz2RlNzra0em9/pRwfHbgcHzj+o2sC/9uDl+GBm0bquY3HNu71BDv7+9nGexsfbPzYivjWBAD81gHP4Wztw5stiGxJAMt/tcHfKYIXHvaemTI/nLMlgY+2Q70AyTNbs1uw7mLJVgQIiZcC4syeT/owgRjhxfPtACye2C8hsQWBKHTOC96AxCsBSzjdt9HNJbEFAbX+TwNR9ZbP4cEjVKQbbgIea66aQGT9UwMBqTEBLBXLC16g3E6WtR7QcJhifQ9uZw9P3Qt6BP1jsqwlQNms3G6R9Wv7/qC3LAC9sBYdXm7Zw+RGt4YAwCidpc1f20e6chKaF17zsrMH74VZZXUNAd1Y3U/Z/CRgebxjo3PvG/vtc4EceCJzAjV/Xq0h8N3W+67LplSWJK390N7AN6356ECXF0KI9XisKEsJqHVJXj1C5AhElWZv68kTlZ29IKSyspSAxnZUw2vbVXPkm72rAjSQB+yj4BtehUSY2EsJENt4IUku8QCVEhTwlMhSnYc0a/S4AQlCdCBLCEQxWyp9EGXNPgKQ8QZz78o3zbGLz0sINLbOV40v4o2JOIvTIIzVfV4QQhjqH1lCQI/NL0wjObG1QKKz4c9Lg1CdS6A2hZqYWtenEqlsYrp68jvS09p7X4oHR425BDR5555dsCqVhm7siwAJzrNWGjXYuc3h3V+ZQ4C4b8S82pRy1gc0FUjXU36Jdd8AvQ4tGFQw+shsAlhMLyHRucbrruzBh0j6RtKTM4AOa7tTsokHAKFJCgiUK4BSiAAYPZ24iTX0CrxDGHmvtvbsc2DQMMdCCKV66eDYAHjfkJaECGvQT2gl8bohpv/lmFWFpoLXxC6FCBZO1gZgEooBHtq5d3jLH8XDy1LOA2xEufSbRJZnPzzBvKkhkjBCFMAMDUW88s6R4eepjVbeZTuxNqsceNXnn7E0QDREEmgfgn5dZLxcmQ0J1L31vdLwHBKgZ/NUeTREAI6XSgJZcs6vZX62XEchxEb+ihcdlT2Iyh5Sc+J3klKIRCSiase84lElIqAX9dJRoektlgDh6lwu5CyPtYn3OpgwZrwwhH6JolKpPbG5NLixjpoDj9XbIGSYHyatKlJwxLC/iF/GURkMhCjAqwyzQb3PWUAJ4E69YEd32Jy+0vvUcfFaDjgGa2zkKtRAfxQenc3yVzpqNJvSbLRejxEBNJeSVE61uvj1hAzNa9YeEQEsoMeHtBEJinUYaSOOuEi6PQGytkE48ndMWM+e3djE6HsuQXc22ZfSJbrH1gC8tbEfm1j6XqowKCd0/JVuzV6spaNjHEJlkcUVwNhplHCACDGs/+qYSib1BsJvlbXnhFA0l5hmVDbqfgIE078/qCDkBSPlCYBnJeVUq6R5Yx6Yq+/K518TuHKTy4YH74Hfw6z8MdRXrCAAAAAASUVORK5CYII=" -->
+<!-- 														width="20" height="20"> -->
+<!-- 												</span>Carne :</label> <select path="day" name="day" id="day"> -->
+<!-- 													<option value="Pollo">Pollo</option> -->
+<!-- 													<option value="Ternera">Ternera</option> -->
+<!-- 												</select> -->
+												</br> <label for="day2"> <img class="icon icons8-Meal"><span
 													style="color: black" class="glyphicon glyphicon-cog"></span>Extra
 													:
 												</label> <select path="day2" name="day2" id="day2">
@@ -175,9 +203,9 @@
 											</br>
 											<button type="submit" class="btn btn-default"
 												data-inline="true">
-												<font color="black">Pedir</font>
+												<font color="black">Pedir y pagar</font>
 											</button>
-											</br> </br>
+											</br></br>
 											<button type="button" class="btn btn-success"
 												data-inline="true">Pedir y añadir mas</button>
 										</form>
@@ -196,23 +224,27 @@
 				<!-- Main -->
 				<div id="main">
 
-					<div  class="container">
+					<div class="container">
 						<h2>la excelencia de nuestras comidas al brillo de tu mesa</h2>
-							
+
 						<div class="row">
-							<div  class="col-xs-12">
+
+
+							<!--================Empieza el anuncio -->
+
+							<div class="col-xs-12">
 								<div style="background-color: #575454;" class="thumbnail">
 
-									<article style="min-height: 13em;"  class="thumb">
-										<a 
+									<article style="min-height: 13em;" class="thumb">
+										<a
 											href="<c:url value="http://www.entrevies.com/wp-content/themes/entrevies/images/restaurante/entrantes-en-cocina-creativa.jpg" />"
-											class="image"><img  class="img-responsive"
+											class="image"><img class="img-responsive"
 											src="<c:url value="http://www.entrevies.com/wp-content/themes/entrevies/images/restaurante/entrantes-en-cocina-creativa.jpg" />"
 											alt="" /></a>
 										<h2>Pinga a la merluza</h2>
 									</article>
-									<h5 href="#demo" data-toggle="modal" data-target="#myModal">
-										<a><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
+									<h5 >
+										</br><a href="#demo" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
 											Añadir Pedido </a>
 									</h5>
 									<div class="container">
@@ -246,238 +278,325 @@
 													class="glyphicon glyphicon-shopping-cart"></span> <!-- 	 data-toggle="collapse" -->
 													Info & Pedir </a>
 											</div>
-											</br> <a style="font-size: 200%;" href="#demo" data-toggle="collapse"> <span 
+											</br> <a style="font-size: 200%;" href="#demo"
+												data-toggle="collapse"> <span
 												class="glyphicon glyphicon-circle-arrow-down"></span>
 											</a>
 										</div>
 									</div>
 								</div>
 							</div>
+
+							<!--================Acaba el anuncio -->
+
+							<!--================Empieza el anuncio -->
+
 							<div class="col-xs-12">
-								<div style="background-color: black;" class="thumbnail">
+								<div style="background-color: #575454;" class="thumbnail">
 
-									<article class="thumb">
+									<article style="min-height: 10em;" class="thumb">
 										<a
-											href="<c:url value="http://www.entrevies.com/wp-content/themes/entrevies/images/restaurante/entrantes-en-cocina-creativa.jpg" />"
+											href="<c:url value="http://www.losandes.com.ar/files/image/2015/03/26/878306.jpg" />"
 											class="image"><img class="img-responsive"
-											src="<c:url value="http://www.entrevies.com/wp-content/themes/entrevies/images/restaurante/entrantes-en-cocina-creativa.jpg" />"
+											src="<c:url value="http://www.losandes.com.ar/files/image/2015/03/26/878306.jpg" />"
 											alt="" /></a>
-										<h2>Merluza a la pinga</h2>
-										<p>Nunc blandit nisi ligula magna sodales lectus elementum
-											non. Integer id venenatis velit.</p>
+										<h2>Pizza de la Mamma</h2>
 									</article>
+									<h5 href="#demo" data-toggle="modal" data-target="#myModal">
+										<a><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
+											Añadir Pedido </a>
+									</h5>
+									<div class="container">
 
-									<div data-role="page">
 										<div data-role="main" class="ui-content">
-											</br>
-											<h2>Bocata calamares</h2>
-											<p>Nunc blandit nisi ligula magna sodales lectus
-												elementum non. Integer id venenatis velit.</p>
-											<a href="#demo" data-toggle="modal" data-target="#myModal"><span 
-												class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
-												Info & Pedir </a>
+											<span style="float: right; font-size: 200%;"
+												class="label label-danger">7,5$</span>
+
+											<h2 style="background-color: #666363;">Pizza mediana</h2>
+
+
+											<div id="demo" class="collapse">
+												<p style="color: #5e9ca0;">
+													<span style="color: #ffffff;"></br>Los ingredientes que
+														se suelen emplear a la horade hacer las m&aacute;s
+														conocidas y t&iacute;picas recetas de merluzas al horno
+														son estas: </span><br /> <br /> <span style="color: #ffffff;">-
+														Merluza de buena calidad</span><br /> <br /> <span
+														style="color: #ffffff;">- Cebollas</span><br /> <br /> <span
+														style="color: #ffffff;">- Patatas</span><br /> <br /> <span
+														style="color: #ffffff;">- Ajos</span><br /> <br /> <span
+														style="color: #ffffff;">- Vino blanco</span><br /> <br />
+													<span style="color: #ffffff;">- Lim&oacute;n</span><br />
+													<br /> <span style="color: #ffffff;">- Pimienta</span><br />
+													<br /> <span style="color: #ffffff;">- Aceite de
+														oliva virgen</span><br /> <br /> <span style="color: #ffffff;">-
+														Sal</span>
+												</p>
+												<a href="#demo" data-toggle="modal" data-target="#myModal"><span
+													class="glyphicon glyphicon-shopping-cart"></span> <!-- 	 data-toggle="collapse" -->
+													Info & Pedir </a>
+											</div>
+											</br> <a style="font-size: 200%;" href="#demo"
+												data-toggle="collapse"> <span
+												class="glyphicon glyphicon-circle-arrow-down"></span>
+											</a>
 										</div>
 									</div>
 								</div>
 							</div>
+
+							<!--================Acaba el anuncio -->
+
+							<!--================Empieza el anuncio -->
+
 							<div class="col-xs-12">
-								<div style="background-color: black;" class="thumbnail">
+								<div style="background-color: #575454;" class="thumbnail">
 
-									<article class="thumb">
+									<article style="min-height: 13em;" class="thumb">
 										<a
-											href="<c:url value="http://www.entrevies.com/wp-content/themes/entrevies/images/restaurante/entrantes-en-cocina-creativa.jpg" />"
+											href="<c:url value="https://grupofeminas.files.wordpress.com/2015/03/comida.jpg" />"
 											class="image"><img class="img-responsive"
-											src="<c:url value="http://www.entrevies.com/wp-content/themes/entrevies/images/restaurante/entrantes-en-cocina-creativa.jpg" />"
+											src="<c:url value="https://grupofeminas.files.wordpress.com/2015/03/comida.jpg" />"
 											alt="" /></a>
-										<h2>Merluza a la pinga</h2>
-										<p>Nunc blandit nisi ligula magna sodales lectus elementum
-											non. Integer id venenatis velit.</p>
+										<h2>Ensalada Asumaja</h2>
 									</article>
+									<h5 href="#demo" data-toggle="modal" data-target="#myModal">
+										<a><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
+											Añadir Pedido </a>
+									</h5>
+									<div class="container">
 
-									<div data-role="page">
 										<div data-role="main" class="ui-content">
-											</br>
-											<h2>Bocata calamares</h2>
-											<p>Nunc blandit nisi ligula magna sodales lectus
-												elementum non. Integer id venenatis velit.</p>
-											<a href="#demo" data-toggle="modal" data-target="#myModal"><span
-												class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
-												Info & Pedir </a>
+											<span style="float: right; font-size: 200%;"
+												class="label label-danger">4$</span>
+
+											<h2 style="background-color: #666363;">Ensalada especialidad</h2>
+
+
+											<div id="demo" class="collapse">
+												<p style="color: #5e9ca0;">
+													<span style="color: #ffffff;"></br>Los ingredientes que
+														se suelen emplear a la horade hacer las m&aacute;s
+														conocidas y t&iacute;picas recetas de merluzas al horno
+														son estas: </span><br /> <br /> <span style="color: #ffffff;">-
+														Merluza de buena calidad</span><br /> <br /> <span
+														style="color: #ffffff;">- Cebollas</span><br /> <br /> <span
+														style="color: #ffffff;">- Patatas</span><br /> <br /> <span
+														style="color: #ffffff;">- Ajos</span><br /> <br /> <span
+														style="color: #ffffff;">- Vino blanco</span><br /> <br />
+													<span style="color: #ffffff;">- Lim&oacute;n</span><br />
+													<br /> <span style="color: #ffffff;">- Pimienta</span><br />
+													<br /> <span style="color: #ffffff;">- Aceite de
+														oliva virgen</span><br /> <br /> <span style="color: #ffffff;">-
+														Sal</span>
+												</p>
+												<a href="#demo" data-toggle="modal" data-target="#myModal"><span
+													class="glyphicon glyphicon-shopping-cart"></span> <!-- 	 data-toggle="collapse" -->
+													Info & Pedir </a>
+											</div>
+											</br> <a style="font-size: 200%;" href="#demo"
+												data-toggle="collapse"> <span
+												class="glyphicon glyphicon-circle-arrow-down"></span>
+											</a>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<!-- 					<div style="width: 800px; margin: 0 auto;"> -->
-						<!-- 												<a type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign"></span>Info & Pedir</a> -->
-						<!-- 						<a href="#demo" data-toggle="modal" data-target="#myModal"><span -->
-						<!-- 							class="glyphicon glyphicon-plus-sign"></span> 	 data-toggle="collapse" -->
-						<!-- 							Info & Pedir </a> -->
-						<!-- 					</div> -->
 
-						<div id="demo" class="collapse">
-							<div data-role="page">
-								<div data-role="main" class="ui-content">
-									<h2>Plato estrella</h2>
-									<p>Nunc blandit nisi ligula magna sodales lectus elementum
-										non. Integer id venenatis velit.</p>
+							<!--================Acaba el anuncio -->
+</div>
 
 
-									<form method="get" action="test">
-										<fieldset class="ui-field-contain">
+<img  width="700" height="700" class="img-responsive"
+											src="<c:url value="http://test08.inversionesdigitales.com/img/commons/vinos-titulo.png" />"
+											alt="" /></br>
+											
+	
+											
+				<!--===========Bedidas=========== -->
+						<div class="row">
+				<!--================Empieza el anuncio -->
+							<div class="col-xs-6">
+								<div style="background-color: #575454;" class="thumbnail">
 
-											<label for="day"><span
-												class="glyphicon glyphicon-plus-sign"></span>Carne :</label> <select
-												path="day" name="day" id="day">
-												<option value="Pollo">Pollo</option>
-												<option value="Ternera">Ternera</option>
-											</select> <label for="day2">Extra :</label> <select path="day2"
-												name="day2" id="day2">
-												<option value="Queso">Queso</option>
-												<option value="Champiniones">Champiniones</option>
-												<option value="Maiz">Maiz</option>
-											</select>
-										</fieldset>
-										<input path="mesas" type="hidden" id="mesas" name="mesas"
-											value="<%=request.getAttribute("mesa")%>"></input> <input
-											type="hidden" path="restaurante" id="restaurante"
-											name="restaurante" value="<%=request.getAttribute("res")%>"></input>
-										</br> <input type="submit" data-inline="true" value="Pedir">
-									</form>
+									<article style="min-height: 9em;" class="thumb">
+										<a
+											href="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											class="image"><img  width="700" height="700" class="img-responsive"
+											src="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											alt="" /></a>
+									</article>
+									<h5 href="#demo" data-toggle="modal" data-target="#myModal">
+										<a><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
+											Añadir Pedido </a>
+									</h5>
+									<div class="container">
 
+										<div data-role="main" class="ui-content">
+											<span style="float: right; font-size: 200%;"
+												class="label label-danger">1$</span>
+
+											<h2 style="background-color: #666363;">Fanta naranja</h2>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
+							<!--================Acaba el anuncio -->
+							<!--================Empieza el anuncio -->
+							<div class="col-xs-6">
+								<div style="background-color: #575454;" class="thumbnail">
 
-						<%
-							if (request.getAttribute("result") != null) {
-						%>
-						<div class="alert alert-success">
-							<strong><%=request.getAttribute("result")%></strong>
-						</div>
-						<%
-							}
-						%>
+									<article style="min-height: 9em;" class="thumb">
+										<a
+											href="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											class="image"><img  width="500" height="500" class="img-responsive"
+											src="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											alt="" /></a>
+										
+									</article>
+									<h5 href="#demo" data-toggle="modal" data-target="#myModal">
+										<a><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
+											Añadir Pedido </a>
+									</h5>
+									<div class="container">
 
-						<article class="thumb">
-							<a
-								href="<c:url value="https://www.comedera.com/wp-content/uploads/2013/12/el-brillante-bocata-calamares.jpg" />"
-								class="image"><img
-								src="<c:url value="https://www.comedera.com/wp-content/uploads/2013/12/el-brillante-bocata-calamares.jpg" />"
-								alt="" /></a>
-							<h2>Bocata de calamares</h2>
-							<p>Nunc blandit nisi ligula magna sodales lectus elementum
-								non. Integer id venenatis velit.</p>
-						</article>
-						<div data-role="page">
-							<div data-role="main" class="ui-content">
-								<h2>Bocata calamares</h2>
-								<p>Nunc blandit nisi ligula magna sodales lectus elementum
-									non. Integer id venenatis velit.</p>
-								<form method="get" action="pedido">
-									<fieldset class="ui-field-contain">
-										<label for="day">Carne :</label> <select path="day" name="day"
-											id="day">
-											<option value="Pollo">Pollo</option>
-											<option value="Ternera">Ternera</option>
-										</select> <label for="day2">Extra :</label> <select path="day2"
-											name="day2" id="day2">
-											<option value="Queso">Queso</option>
-											<option value="Champiniones">Champiniones</option>
-											<option value="Maiz">Maiz</option>
-										</select>
-									</fieldset>
-									<input path="mesas" type="hidden" id="mesas" name="mesas"
-										value="<%=request.getAttribute("mesa")%>"></input> <input
-										type="hidden" path="restaurante" id="restaurante"
-										name="restaurante" value="<%=request.getAttribute("res")%>"></input>
-									</br> <input type="submit" data-inline="true" value="Pedir">
-								</form>
+										<div data-role="main" class="ui-content">
+											<span style="float: right; font-size: 200%;"
+												class="label label-danger">1$</span>
 
+											<h2 style="background-color: #666363;">Fanta naranja</h2>
+										</div>
+									</div>
+								</div>
 							</div>
+							<!--================Acaba el anuncio -->
 						</div>
+						
+						<div class="row">
+				<!--================Empieza el anuncio -->
+							<div class="col-xs-6">
+								<div style="background-color: #575454;" class="thumbnail">
 
-						<article class="thumb">
-							<a
-								href="<c:url value="http://diariodegastronomia.com/wp-content/uploads/2015/07/Locro-plato-tradicional-de-la-cocina-quite%C3%B1a.jpg" />"
-								class="image"><img
-								src="<c:url value="http://diariodegastronomia.com/wp-content/uploads/2015/07/Locro-plato-tradicional-de-la-cocina-quite%C3%B1a.jpg" />"
-								alt="" /></a>
-							<h2>Tempus aliquam veroeros</h2>
-							<p>Nunc blandit nisi ligula magna sodales lectus elementum
-								non. Integer id venenatis velit.</p>
-						</article>
-						<div data-role="page">
-							<div data-role="main" class="ui-content">
-								<h2>Plato estrella</h2>
-								<p>Nunc blandit nisi ligula magna sodales lectus elementum
-									non. Integer id venenatis velit.</p>
-								<form method="get" action="pedido">
-									<fieldset class="ui-field-contain">
-										<label for="day">Carne :</label> <select path="day" name="day"
-											id="day">
-											<option value="Pollo">Pollo</option>
-											<option value="Ternera">Ternera</option>
-										</select> <label for="day2">Extra :</label> <select path="day2"
-											name="day2" id="day2">
-											<option value="Queso">Queso</option>
-											<option value="Champiniones">Champiniones</option>
-											<option value="Maiz">Maiz</option>
-										</select>
-									</fieldset>
-									<input path="mesas" type="hidden" id="mesas" name="mesas"
-										value="<%=request.getAttribute("mesa")%>"></input> <input
-										type="hidden" path="restaurante" id="restaurante"
-										name="restaurante" value="<%=request.getAttribute("res")%>"></input>
-									</br> <input type="submit" data-inline="true" value="Pedir">
-								</form>
+									<article style="min-height: 9em;" class="thumb">
+										<a
+											href="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											class="image"><img  width="700" height="700" class="img-responsive"
+											src="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											alt="" /></a>
+									</article>
+									<h5 href="#demo" data-toggle="modal" data-target="#myModal">
+										<a><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
+											Añadir Pedido </a>
+									</h5>
+									<div class="container">
 
+										<div data-role="main" class="ui-content">
+											<span style="float: right; font-size: 200%;"
+												class="label label-danger">1$</span>
+
+											<h2 style="background-color: #666363;">Fanta naranja</h2>
+										</div>
+									</div>
+								</div>
 							</div>
-						</div>
+							<!--================Acaba el anuncio -->
+							<!--================Empieza el anuncio -->
+							<div class="col-xs-6">
+								<div style="background-color: #575454;" class="thumbnail">
 
+									<article style="min-height: 9em;" class="thumb">
+										<a
+											href="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											class="image"><img  width="500" height="500" class="img-responsive"
+											src="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											alt="" /></a>
+										
+									</article>
+									<h5 href="#demo" data-toggle="modal" data-target="#myModal">
+										<a><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
+											Añadir Pedido </a>
+									</h5>
+									<div class="container">
 
-						<article class="thumb">
-							<a
-								href="<c:url value="http://www.eliminaladiabetes.com/wp-content/uploads/2014/03/platillos-para-diabeticos1.jpg" />"
-								class="image"><img
-								src="<c:url value="http://www.eliminaladiabetes.com/wp-content/uploads/2014/03/platillos-para-diabeticos1.jpg" />"
-								alt="" /></a>
-							<h2>Aliquam ipsum sed dolore</h2>
-							<p>Nunc blandit nisi ligula magna sodales lectus elementum
-								non. Integer id venenatis velit.</p>
-						</article>
+										<div data-role="main" class="ui-content">
+											<span style="float: right; font-size: 200%;"
+												class="label label-danger">1$</span>
 
-						<div data-role="page">
-							<div data-role="main" class="ui-content">
-								<h2>Plato estrella</h2>
-								<p>Nunc blandit nisi ligula magna sodales lectus elementum
-									non. Integer id venenatis velit.</p>
-								<form method="get" action="pedido">
-									<fieldset class="ui-field-contain">
-										<label for="day">Carne :</label> <select path="day" name="day"
-											id="day">
-											<option value="Pollo">Pollo</option>
-											<option value="Ternera">Ternera</option>
-										</select> <label for="day2">Extra :</label> <select path="day2"
-											name="day2" id="day2">
-											<option value="Queso">Queso</option>
-											<option value="Champiniones">Champiniones</option>
-											<option value="Maiz">Maiz</option>
-										</select>
-									</fieldset>
-									<input path="mesas" type="hidden" id="mesas" name="mesas"
-										value="<%=request.getAttribute("mesa")%>"></input> <input
-										type="hidden" path="restaurante" id="restaurante"
-										name="restaurante" value="<%=request.getAttribute("res")%>"></input>
-									</br> <input type="submit" data-inline="true" value="Pedir">
-								</form>
-
+											<h2 style="background-color: #666363;">Fanta naranja</h2>
+										</div>
+									</div>
+								</div>
 							</div>
+							<!--================Acaba el anuncio -->
 						</div>
+						
+															</br>
+<img  width="700" height="700" class="img-responsive"
+											src="<c:url value="http://test08.inversionesdigitales.com/img/commons/cervezas-titulo.png
+" />"
+											alt="" /></br>	
+											<div class="row">
+				<!--================Empieza el anuncio -->
+							<div class="col-xs-6">
+								<div style="background-color: #575454;" class="thumbnail">
 
+									<article style="min-height: 9em;" class="thumb">
+										<a
+											href="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											class="image"><img  width="700" height="700" class="img-responsive"
+											src="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											alt="" /></a>
+									</article>
+									<h5 href="#demo" data-toggle="modal" data-target="#myModal">
+										<a><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
+											Añadir Pedido </a>
+									</h5>
+									<div class="container">
 
+										<div data-role="main" class="ui-content">
+											<span style="float: right; font-size: 200%;"
+												class="label label-danger">1$</span>
+
+											<h2 style="background-color: #666363;">Fanta naranja</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--================Acaba el anuncio -->
+							<!--================Empieza el anuncio -->
+							<div class="col-xs-6">
+								<div style="background-color: #575454;" class="thumbnail">
+
+									<article style="min-height: 9em;" class="thumb">
+										<a
+											href="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											class="image"><img  width="500" height="500" class="img-responsive"
+											src="<c:url value="http://www.crepestation.cl/wp-content/uploads/2017/01/fantanor.png" />"
+											alt="" /></a>
+										
+									</article>
+									<h5 href="#demo" data-toggle="modal" data-target="#myModal">
+										<a><span class="glyphicon glyphicon-plus-sign"></span> <!-- 	 data-toggle="collapse" -->
+											Añadir Pedido </a>
+									</h5>
+									<div class="container">
+
+										<div data-role="main" class="ui-content">
+											<span style="float: right; font-size: 200%;"
+												class="label label-danger">1$</span>
+
+											<h2 style="background-color: #666363;">Fanta naranja</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--================Acaba el anuncio -->
+						</div>
+						
+						<img  width="500" height="500" class="img-responsive"
+											src="<c:url value="http://www.vyp-kaleidos.com/wp-content/uploads/2016/04/botellas2017.png" />"
+											alt="" />		
 					</div>
-
 					<!-- 				Footer -->
 					<!-- 					<footer id="footer" class="panel"> -->
 					<!-- 						<div class="inner split"> -->
@@ -524,7 +643,6 @@
 					<!-- 						</div> -->
 					<!-- 					</footer> -->
 				</div>
-
 				<!-- Scripts -->
 				<script src="<c:url value="/resources/assets/js/jquery.min.js" />"></script>
 				<script
