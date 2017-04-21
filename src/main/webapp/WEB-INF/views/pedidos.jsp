@@ -1,6 +1,7 @@
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" session="true" 
-	pageEncoding="ISO-8859-1" import="com.home.models.*, java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	session="true" pageEncoding="ISO-8859-1"
+	import="com.home.models.*, java.util.List"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -52,8 +53,13 @@
 						<td><%=p.getId()%></td>
 						<td><%=p.getRestaurante()%></td>
 						<td><%=p.getMesa()%></td>
-						<td><%=p.getPedido()%></td>
-
+						<td>
+							<%
+								for (String ped : p.getPedido()) {
+							%> <%=ped + ","%> <%
+ 	}
+ %>
+						</td>
 					</tr>
 					<%
 						}
@@ -62,13 +68,10 @@
 			</table>
 		</div>
 	</div>
-
-  
-  
-  <head>
-  <title>Pusher Test</title>
-  <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
-    <script>
+<head>
+<title>Pusher Test</title>
+<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+<script>
   
     
     
@@ -225,10 +228,11 @@
 <%--     <source src="<c:url value="/resources/alert.mp3" />" /> --%>
 <!-- </audio> -->
 <!-- <a href="#" id="play-button"></a> -->
- 
+
 <%-- <audio id="alertAudio" src="<c:url value="/resources/alert.mp3" />" autobuffer controls autoplay /> --%>
 
-<iframe  id="if" hidden width="640" height="360" src="" frameborder="0" allowfullscreen ></iframe>
+<iframe id="if" hidden width="640" height="360" src="" frameborder="0"
+	allowfullscreen></iframe>
 
 
 

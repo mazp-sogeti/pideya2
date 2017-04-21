@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="com.home.models.*" session="true"%>
+    pageEncoding="ISO-8859-1" import="com.home.models.*,java.util.*" session="true"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,16 +14,13 @@
 	p =(Pedido) request.getAttribute("pedido");
     String restaurante = p.getRestaurante();
     String mesa = p.getMesa();
-    String pedido = p.getPedido();
-    
-    String[] parts = pedido.split(";");
-	//request.setAttribute("pedido", p);
-    %>
+    List<String> lPedido = p.getPedido();
+        %>
 <div style="background: #666363;" data-role="page" id="pageone" data-theme="b">
   <div  data-role="header">
     <h1><%= mesa %></h1>
   </div>
-<form method="get" action="test2/<%=p.getId()%>">
+<form method="get" action="/pideya/test/test2/<%=p.getId()%>">
 
   <div data-role="main" class="ui-content">
 <!--     <p>Some Text..</p> -->
@@ -31,7 +28,7 @@
 <!--     <a href="#" class="ui-btn">Link Button</a> -->
     <p>Su pedido:</p>
     <ul data-role="listview" data-inset="true">
-    <%for(String ped : parts){ %>
+    <%for(String ped : lPedido){ %>
       <li><a href="#"><%=ped %></a></li>
 	<%} %>
     </ul>

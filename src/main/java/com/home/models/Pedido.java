@@ -1,5 +1,7 @@
 package com.home.models;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,14 +11,15 @@ public class Pedido {
 	String id;
 	String restaurante;
 	String mesa;
-	String pedido;
-
-	public String getPedido() {
+	public List<String> getPedido() {
 		return pedido;
 	}
-	public void setPedido(String pedido) {
+	public void setPedido(List<String> pedido) {
 		this.pedido = pedido;
 	}
+	List<String> pedido;
+
+
 	
 	
 	public String getId() {

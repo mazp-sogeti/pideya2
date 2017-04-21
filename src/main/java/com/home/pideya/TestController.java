@@ -82,7 +82,7 @@ public class TestController {
 
 			Query searchUserQuery = new Query(Criteria.where("restaurante").is(qrCode));
 			
-			List ped = mongoOperation.find(searchUserQuery, Pedido.class);
+		//	List ped = mongoOperation.find(searchUserQuery, Pedido.class);
 			
 //			DBCollection table = db.getCollection("Students");
 //			BasicDBObject courseNameDBObject = new BasicDBObject("course.course_name", "Java EE") ;
@@ -98,32 +98,35 @@ public class TestController {
 		
 		request.setAttribute("res", RESTAURANTE);
 		request.setAttribute("mesa", MESA);
-	    request.setAttribute("pList", ped);
+	  //  request.setAttribute("pList", ped);
 		//if(ped!=null && ped.size() > 0)
 		//modelAndView.addObject("users", ped);
 		return modelAndView;
 	}
     
-	@RequestMapping(value = "/test/pedido", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value = "/test/comprado/{id}", method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
-	public ModelAndView greeting(HttpServletRequest request) {
-		modelAndView = new ModelAndView("index2");
+	public ModelAndView greeting(HttpServletRequest request,@PathVariable("id") String id) {
+		
+		modelAndView = new ModelAndView("MisPedidos");
 		//request.setAttribute("res", res);
         System.out.println("==== in pedido ====");
         
+        if(id.equals("nada"))
+        	{
+    		modelAndView = new ModelAndView("index2");
+            request.setAttribute("result", "id igual a nada");
+    		return modelAndView;
+        	}
         try{
         	Pedido p = new Pedido();
-//        	String a = (String)request.getParameter("day");
-//        	p.setRestaurante((String)request.getParameter("restaurante"));
-//        	p.setMesa((String)request.getParameter("mesas"));
-//        	p.setPedido((String)request.getParameter("day"));
-        	p = (Pedido)request.getAttribute("pedidoF");
-        	//mongoOperation.save(p);
-        	
+			Query query = new Query(Criteria.where("id").is(id));
+        	p = mongoOperation.findOne(query, Pedido.class);
+        	request.setAttribute("pedido", p);
+        	request.setAttribute("count", String.valueOf(p.getPedido().size()));
         	request.setAttribute("result", "Pedido enviado");
         }catch(Exception e){
             request.setAttribute("result", e.getLocalizedMessage());
-
         }
         return modelAndView;
     }
@@ -131,16 +134,15 @@ public class TestController {
 		@RequestMapping(value = "/test/pedidos/{restaurante}", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 		@ResponseBody
 		public ModelAndView verPedidos(HttpServletRequest request,@PathVariable("restaurante") String restaurante) {
+
 			modelAndView = new ModelAndView("pedidos");
-			
 			Query searchUserQuery = new Query(Criteria.where("restaurante").is(restaurante));
-			
 			List ped = mongoOperation.find(searchUserQuery, Pedido.class);
 		    request.setAttribute("pList", ped);
 	   return modelAndView;
 	   }
-		
-		@RequestMapping(value = "/test/test", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+		//confirmar directo 
+		@RequestMapping(value = "/test/confirmar", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 		@ResponseBody
 		public ModelAndView test(HttpServletRequest request) {
 			modelAndView = new ModelAndView("confPedido");
@@ -149,9 +151,12 @@ public class TestController {
 		        	String a = (String)request.getParameter("day");
 		        	p.setRestaurante((String)request.getParameter("restaurante"));
 		        	p.setMesa((String)request.getParameter("mesas"));
-		        	String pedido = ((String)request.getParameter("day"));
-		        	pedido += ";"+((String)request.getParameter("day2"));
-		        	p.setPedido(pedido);
+		        	String pedido1 = ((String)request.getParameter("day"));
+		        	String pedido2 = ((String)request.getParameter("day2"));
+		        	List<String> L = new ArrayList<String>();
+		        	L.add(pedido1);
+		        	L.add(pedido2);
+		        	p.setPedido(L);
 		        	mongoOperation.save(p);
 		        	
 		        	Pusher pusher = new Pusher("327249", "25a63b5bdeb97ea6104e", "1c9a836061a07adf968b");
@@ -176,6 +181,58 @@ public class TestController {
 			return modelAndView;
 	   }
 		
+		//confirmar despues de comprar mas 
+				@RequestMapping(value = "/test/confirmar/{id}", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+				@ResponseBody
+				public ModelAndView comprarDespuesDeMas(HttpServletRequest request,@PathVariable("id") String id) {
+					modelAndView = new ModelAndView("confPedido");
+					 try{
+						 Pedido p = new Pedido();
+				        	String a = (String)request.getParameter("day");
+				        	String pedido1 = ((String)request.getParameter("day"));
+				        	String pedido2 = ((String)request.getParameter("day2"));
+				        	List<String> L = new ArrayList<String>();
+				        	//L.add(pedido1);
+				        	//L.add(pedido2);
+				        	int count=0;			        	
+				        	
+				        	if(id!=null)
+				        	{
+				        		p.setId(id);
+				        	}
+				        	
+				        	Query searchUserQuery = new Query(Criteria.where("id").is(id));
+							
+							Pedido ped = mongoOperation.findOne(searchUserQuery, Pedido.class);
+							if (ped!=null)
+							{
+								L = ped.getPedido();
+								L.add(pedido2);
+								ped.setPedido(L);
+					        	mongoOperation.save(ped);
+					        	Pusher pusher = new Pusher("327249", "25a63b5bdeb97ea6104e", "1c9a836061a07adf968b");
+								pusher.setCluster("eu");
+								pusher.setEncrypted(true);
+								
+								pusher.trigger("my-channel", "my-event", Collections.singletonMap("message", p));
+					        	
+								for(String s :  ped.getPedido())
+								{
+									count++;
+								}
+							}
+				        	
+							request.setAttribute("pedido",ped);
+				        	//mongoOperation.save(p);
+				        	
+				        	request.setAttribute("count",  String.valueOf(count));
+				        }catch(Exception e){
+				            request.setAttribute("result", e.getLocalizedMessage());
+
+				        }
+				        return modelAndView;
+			   }
+		
 		@RequestMapping(value = "/test/test2/{id}", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 		@ResponseBody
 		public ModelAndView test2(HttpServletRequest request,@PathVariable("id") String id) {
@@ -190,25 +247,160 @@ public class TestController {
 		        	request.setAttribute("pedidoF", p);
 		        }catch(Exception e){
 		            request.setAttribute("result", e.getLocalizedMessage());
-
 		        }
 			
 			// modelAndView = test2Home(request);//new ModelAndView("redirect:home");
 			return modelAndView;
 	   }
-		
-		@RequestMapping(value = "/test/home", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+		//despues de la compra devuelve al index
+		@RequestMapping(value = "/test/home/{id}", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 		@ResponseBody
-		public ModelAndView test2Home(HttpServletRequest request) {
+		public ModelAndView test2Home(HttpServletRequest request,@PathVariable("id") String id) {
 			modelAndView = new ModelAndView("index2");
 			 try{
+				 if(id.equals("nada"))
+				 {
+						modelAndView = new ModelAndView("index");
+						return modelAndView;
+				 }
 		        	Pedido p = new Pedido();
-		        	p = (Pedido)request.getAttribute("pedido");
-					request.setAttribute("result", "Pedido enviado");
+		        	Query query = new Query(Criteria.where("id").is(id));
+		        	p = mongoOperation.findOne(query, Pedido.class);
+		        	String d1 = (String)request.getAttribute("day");
+		        	String d2 =(String)request.getAttribute("day2");
+		        	List<String> pe = new ArrayList<String>();
+		        	if(d1!=null)
+		        		pe.add(d1);
+		        	
+		        	p.setPedido(pe);
+		        	request.setAttribute("count", String.valueOf(p.getPedido().size()));
+					//request.setAttribute("result", "Pedido enviado");
+		        	request.setAttribute("res", p.getRestaurante());
+		        	request.setAttribute("mesa", p.getMesa());
 		        	request.setAttribute("pedido", p);
-		        }catch(Exception e){
+		        }catch(Exception e){			
 		            request.setAttribute("result", e.getLocalizedMessage());
 		        }
 			return modelAndView;
 	   }
+		
+		//carrito
+		@RequestMapping(value = "/test/carrito/{id}", method = {RequestMethod.POST,RequestMethod.GET})
+		@ResponseBody
+		public ModelAndView greeting34(HttpServletRequest request,@PathVariable("id") String id) {
+			modelAndView = new ModelAndView("Carrito");
+			//request.setAttribute("res", res);
+	        System.out.println("==== in carrito ====");
+	        int count=0;
+	        try{
+	        	Pedido p = new Pedido();
+	        	if(id!=null)
+	        	{
+	        		p.setId(id);
+	        	}
+	        	Query searchUserQuery = new Query(Criteria.where("id").is(id));
+				
+				Pedido ped = mongoOperation.findOne(searchUserQuery, Pedido.class);
+				if (ped!=null)
+				{
+					for(String s :  ped.getPedido())
+					{
+						count++;
+					}
+				}
+	        	
+				request.setAttribute("pedido",ped);
+	        	//mongoOperation.save(p);
+	        	
+	        	request.setAttribute("count", String.valueOf(count));
+	        }catch(Exception e){
+	            request.setAttribute("result", e.getLocalizedMessage());
+
+	        }
+	        return modelAndView;
+	    }
+		
+		//seguir comprando por primera vez --> guarda el pedido y genera id
+				@RequestMapping(value = "/test/seguir", method = {RequestMethod.POST,RequestMethod.GET})
+				@ResponseBody
+				public ModelAndView SeguirComprando(HttpServletRequest request) {
+					modelAndView = new ModelAndView("index2");
+					//request.setAttribute("res", res);
+			        System.out.println("==== in seguir comprando primera vez ====");
+			        int count=0;
+			        try{
+			        	Pedido p = new Pedido();
+			        	String a = (String)request.getParameter("day");
+			        	p.setRestaurante((String)request.getParameter("restaurante"));
+			        	p.setMesa((String)request.getParameter("mesas"));
+			        	String pedido1 = ((String)request.getParameter("day"));
+			        	String pedido2 = ((String)request.getParameter("day2"));
+			        	List<String> L = new ArrayList<String>();
+			        	//L.add(pedido1);
+			        	L.add(pedido2);
+			        	p.setPedido(L);
+			        	mongoOperation.save(p);
+			        	count = p.getPedido().size();
+			        	
+						request.setAttribute("pedido",p);
+			        	//mongoOperation.save(p);
+						request.setAttribute("id",p.getId());
+			        	request.setAttribute("count", String.valueOf(count));
+			        }catch(Exception e){
+			            request.setAttribute("result", e.getLocalizedMessage());
+
+			        }
+			        return modelAndView;
+			    }
+				
+				//seguir comprando por segunda y mas veces --> recupera pedido por id
+				@RequestMapping(value = "/test/seguir/{id}", method = {RequestMethod.POST,RequestMethod.GET})
+				@ResponseBody
+				public ModelAndView SeguirComprando2(HttpServletRequest request,@PathVariable("id") String id) {
+					modelAndView = new ModelAndView("index2");
+					//request.setAttribute("res", res);
+			        System.out.println("==== in seguir comprando ====");
+			        int count=0;
+			        try{
+			        	
+			        	Pedido p = new Pedido();
+			        	String a = (String)request.getParameter("day");
+			        	String pedido1 = ((String)request.getParameter("day"));
+			        	String pedido2 = ((String)request.getParameter("day2"));
+			        	List<String> L = new ArrayList<String>();
+			        	//L.add(pedido1);
+			        	//L.add(pedido2);
+			        				        	
+			        	
+			        	if(id!=null)
+			        	{
+			        		p.setId(id);
+			        	}
+			        	
+			        	Query searchUserQuery = new Query(Criteria.where("id").is(id));
+						
+						Pedido ped = mongoOperation.findOne(searchUserQuery, Pedido.class);
+						if (ped!=null)
+						{
+							L = ped.getPedido();
+							L.add(pedido2);
+							ped.setPedido(L);
+				        	mongoOperation.save(ped);
+							for(String s :  ped.getPedido())
+							{
+								count++;
+							}
+						}
+			        	
+						request.setAttribute("pedido",ped);
+			        	//mongoOperation.save(p);
+			        	
+			        	request.setAttribute("count",  String.valueOf(count));
+			        }catch(Exception e){
+			            request.setAttribute("result", e.getLocalizedMessage());
+
+			        }
+			        return modelAndView;
+			    }
+		
 }

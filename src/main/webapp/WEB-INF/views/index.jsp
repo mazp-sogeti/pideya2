@@ -25,7 +25,7 @@ if (navigator.vibrate) {
 function myFunction() {
 	
 	
-	window.location.replace("/pideya/test/pedido");
+	window.location.replace("/pideya/test/comprado/<%= p !=null ? p.getId() : "nada" %>");
 }setInterval(myFunction, 2000);
 </script>
 <h1>Pedido <%= p !=null ? p.getId() : "nada" %> enviado correctamente </h1>
