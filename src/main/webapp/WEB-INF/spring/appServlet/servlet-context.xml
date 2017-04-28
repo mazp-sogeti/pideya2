@@ -35,6 +35,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+<beans:bean class="com.home.pideya.CORSFilter" name="corsFilter"></beans:bean>
 
 	
 	<!-- Factory bean that creates the Mongo instance -->
@@ -51,7 +52,7 @@
 </beans:bean>
 
 
-<beans:bean id="customUserDetailsService" class="com.home.detailsService.CustomUserDetailsService"/>
+<!-- <beans:bean id="customUserDetailsService" class="com.home.detailsService.CustomUserDetailsService"/> -->
 
 	<context:component-scan base-package="com.home.pideya" />
 	<context:component-scan base-package="com.home.models" />

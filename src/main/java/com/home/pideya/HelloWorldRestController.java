@@ -1,16 +1,12 @@
 package com.home.pideya;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoActionOperation;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.MediaType; 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,7 +78,8 @@ public class HelloWorldRestController {
 	    public ResponseEntity<Users> getUser(@PathVariable("id") String id) {
 	        System.out.println("Fetching User with id------RestController " + id);
 	   	 MongoOperations mongoOperation = (MongoOperations)mongoTemplate;
-	        Users user = mongoOperation.findById(id, Users.class);
+	        //Users user = mongoOperation.findById(id, Users.class);
+	   	 Users user = repository.findUsersByName(id);
 	        if (user == null) {
 	            System.out.println("User with id " + id + " not found");
 	            return new ResponseEntity<Users>(HttpStatus.NOT_FOUND);

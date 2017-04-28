@@ -14,8 +14,8 @@
 		<logout />
 	</http>
 
-	<beans:bean id="customUserDetailsService"
-		class="com.home.detailsService.CustomUserDetailsService" />
+<!-- 	<beans:bean id="customUserDetailsService" -->
+<!-- 		class="com.home.detailsService.CustomUserDetailsService" /> -->
 	<authentication-manager>
 		<authentication-provider user-service-ref="customUserDetailsService" />
 	</authentication-manager>
